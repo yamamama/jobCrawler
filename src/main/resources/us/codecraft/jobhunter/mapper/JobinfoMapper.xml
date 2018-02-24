@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="us.codecraft.jobhunter.mapper.JobinfoMapper" >
+    <resultMap id="BaseResultMap" type="us.codecraft.jobhunter.model.BaseJobInfo" >
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="url" property="url"/>
+        <result column="create_time" property="createTime"/>
+        <result column="salary" property="salary"/>
+        <result column="education_require" property="educationRequire"/>
+        <result column="company" property="company"/>
+        <result column="description" property="description"/>
+        <result column="urlmd5" property="urlmd5"/>
+        <result column="source" property="source"/>
+        <result column="city" property="city"/>
+        <result column="experience" property="experience"/>
+        <result column="company_size" property="companySize"/>
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, title, url, create_time, salary, education_require, company, description, urlmd5,
+        source, city,experience
+    </sql>
+
+
+    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="us.codecraft.jobhunter.model.BaseJobInfo" >
+        insert into jobs (title, url,
+        create_time, salary, education_require,
+        company, description, urlMd5,
+        source, city,experience ,company_size)
+        values (#{title}, #{url},
+        Now(), #{salary}, #{educationRequire},
+        #{company}, #{description}, #{urlmd5},
+        #{source}, #{city} ,#{experience} ,#{companySize})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="us.codecraft.jobhunter.model.BaseJobInfo" >
+        update jobs
+        <set >
+            <if test="title != null" >
+                title = #{title},
+            </if>
+            <if test="url != null" >
+                url = #{url},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime},
+            </if>
+            <if test="salary != null" >
+                salary = #{salary,jdbcType=INTEGER},
+            </if>
+            <if test="educationRequire != null" >
+                education_require = #{educationRequire},
+            </if>
+            <if test="company != null" >
+                company = #{company},
+            </if>
+            <if test="description != null" >
+                description = #{description},
+            </if>
+            <if test="urlmd5 != null" >
+                urlmd5 = #{urlmd5},
+            </if>
+            <if test="source != null" >
+                source = #{source},
+            </if>
+            <if test="city != null" >
+                city = #{city},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>
